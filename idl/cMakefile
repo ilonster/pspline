@@ -1,0 +1,15 @@
+CC = gcc
+CFLAGS = -fPIC 
+
+CLIB = libctest
+COBJ = ctest.o cfun.o idlfun.o
+
+
+all: $(CLIB).so  
+
+$(CLIB).so: $(COBJ)
+	${CC} ${CFLAGS} -shared -o $@ $(COBJ)
+
+$(COBJ): %.o : %.c 
+	${CC} ${CFLAGS} -c -o $@ $<
+
