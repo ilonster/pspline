@@ -1,0 +1,32 @@
+.TH ezcdf 3 "1999-June-02" "ntcc"
+.SH NAME
+EZcdf \-Easy Interface to netCDF Routines 
+.SH SYNOPSIS
+f90 ... -L$NTCCHOME/lib -lezcdf
+.sp
+.SH DESCRIPTION
+.PP
+The EZcdf library routines serve as replacement for the non-portable BZIO
+input/output routines used in many PPPL codes such as JSOLVER, DMAP, PEST etc.
+The present routines are based on NetCDF, a portable binary file format
+(http://www.unidata.ucar.edu/packages/netcdf)
+with data access times comparable to raw binary reads/writes. 
+.SH FILES
+Fortran90 Module
+.sp
+ezcdf    (USE ezcdf)
+.sp
+when compiling specify location of modules with appropriate compiler option
+.sp
+[ at PPPL  = $NTCCHOME/mod ]
+.SH COMPILER OPTIONS
+.sp
+On Sun
+ -fast
+.sp
+On Alpha Linux
+ -assume no2underscores
+.SH "SEE ALSO"
+.LP
+.B http://w3.pppl.gov/NTCC/Ezcdf/ezcdf.html
+.LP

@@ -1,0 +1,743 @@
+  1d spline / lookup test program run on...
+Thu Apr 27 22:12:42 EDT 2000
+OSF1 jupiter.pppl.gov V4.0 878 alpha alpha
+  ...test:    1.00000000000000        1.00000000010000      diff=
+  1.000000082740371E-010
+   [[ double precision ]]
+  
+  total spline evaluations per test loop:        500000
+  ... setup 1d splines ... 
+  ... setup 2d & 3d test grids ... 
+  ... setup 2d and 3d splines ... 
+  ... setup completed ... 
+ ++++++++++++++++++++++++++++++++++++++++++++++++
+  ==> grid:  evenly spaced grid  
+  
+ ---------------------------------------------
+  ==> vector:  modestly changing vector      
+  
+  =================
+  ...periodic:  NO
+  ...even spacing:  YES
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0859, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.0888, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1688, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9233, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0800, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.0849, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1688, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9604, vector size =    1, variance = 0.000E+00
+  
+  =================
+  ...periodic:  YES
+  ...even spacing:  YES
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0791, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.0869, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1640, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9116, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0761, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.0810, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1640, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9467, vector size =    1, variance = 0.000E+00
+  
+ ---------------------------------------------
+  ==> vector:  rapidly changing vector       
+  
+  =================
+  ...periodic:  NO
+  ...even spacing:  YES
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0810, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.0898, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1708, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9174, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1054, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1122, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1981, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9984, vector size =    1, variance = 0.000E+00
+  
+  =================
+  ...periodic:  YES
+  ...even spacing:  YES
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0781, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.0859, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1649, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9067, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1025, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1093, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1942, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.9858, vector size =    1, variance = 0.000E+00
+  
+ ++++++++++++++++++++++++++++++++++++++++++++++++
+  ==> grid:  smooth varying grid 
+  
+ ---------------------------------------------
+  ==> vector:  modestly changing vector      
+  
+  =================
+  ...periodic:  NO
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2899, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2948, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4656, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3404, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1357, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1357, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3260, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1882, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3377, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3006, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4577, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3121, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3240, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2645, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3787, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1940, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1767, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1991, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3192, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5245, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1005, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1142, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2391, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4757, vector size =    1, variance = 0.000E+00
+  
+  =================
+  ...periodic:  YES
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2889, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2918, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4597, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.2975, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1337, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1337, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3201, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1706, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3348, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2977, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4529, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3209, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3211, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2625, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3728, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1862, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1747, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1933, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3152, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5216, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0966, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1113, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2352, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4708, vector size =    1, variance = 0.000E+00
+  
+ ---------------------------------------------
+  ==> vector:  rapidly changing vector       
+  
+  =================
+  ...periodic:  NO
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3192, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3348, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5114, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3756, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3279, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3426, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5241, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.4556, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3475, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3123, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4734, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3248, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3728, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3475, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5036, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3902, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1747, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1991, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3279, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5284, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1884, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2167, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3348, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5801, vector size =    1, variance = 0.000E+00
+  
+  =================
+  ...periodic:  YES
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3162, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3309, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5065, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3434, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3240, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3396, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5202, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.4400, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3455, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3114, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4694, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3317, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3709, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3435, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5026, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3756, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1708, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1971, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3211, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5216, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1854, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2128, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3309, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5909, vector size =    1, variance = 0.000E+00
+  
+ ++++++++++++++++++++++++++++++++++++++++++++++++
+  ==> grid:  irregular grid      
+  
+ ---------------------------------------------
+  ==> vector:  modestly changing vector      
+  
+  =================
+  ...periodic:  NO
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2752, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2508, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4382, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.2790, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1474, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1308, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3221, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1560, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3367, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2791, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4607, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.2965, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3152, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2694, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3767, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1892, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1776, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1923, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3113, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4884, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0996, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1113, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2401, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4572, vector size =    1, variance = 0.000E+00
+  
+  =================
+  ...periodic:  YES
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2713, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2479, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4236, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.2526, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1445, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1279, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3153, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1433, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3338, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2762, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4558, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3082, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3113, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2645, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3738, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.1716, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1747, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1893, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3065, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4894, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.0966, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1093, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2352, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4630, vector size =    1, variance = 0.000E+00
+  
+ ---------------------------------------------
+  ==> vector:  rapidly changing vector       
+  
+  =================
+  ...periodic:  NO
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2489, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2460, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4353, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.2868, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2606, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2567, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4568, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3726, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3504, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2938, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4851, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3200, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3787, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3201, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5183, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3951, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1757, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1903, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3182, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4992, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           0,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1903, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2040, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3328, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5753, vector size =    1, variance = 0.000E+00
+  
+  =================
+  ...periodic:  YES
+  ...even spacing:  NO
+  ...algorithm:  pseudo-Newton       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2450, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2411, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4324, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3053, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -1,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.2567, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2547, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4529, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3522, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  binary search       
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3484, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2908, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.4792, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3219, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -2,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.3758, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3172, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.5104, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   2.3834, vector size =    1, variance = 0.000E+00
+  
+  ...even spacing:  NO
+  ...algorithm:  linear indexing fcn 
+  
+  ...DO NOT use previous search result.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,           3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1747, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.1874, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3104, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.4962, vector size =    1, variance = 0.000E+00
+  
+  
+  ...USE previous result as start point for next search.
+  
+  %genpkg(ngrid,grid,gpkg,           1,1,0,zdum,          -3,ier):  ier=
+           0
+  
+ $$$$$> cpu time (secs) =   0.1884, vector size = 1000, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.2040, vector size =  100, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   0.3328, vector size =   10, variance = 0.000E+00
+ $$$$$> cpu time (secs) =   1.5753, vector size =    1, variance = 0.000E+00
+  
+  ------------------------------------- 
+  2d test (linear fcn lookup algorithm)
+ $$$$$> cpu time (secs) =   0.5426, vector size = 1000
+ $$$$$> cpu time (secs) =   0.5368, vector size =  100
+ $$$$$> cpu time (secs) =   0.8072, vector size =   10
+ $$$$$> cpu time (secs) =   3.2852, vector size =    1
+  ------------------------------------- 
+  3d test (linear fcn lookup algorithm)
+ $$$$$> cpu time (secs) =   1.3849, vector size = 1000
+ $$$$$> cpu time (secs) =   1.3508, vector size =  100
+ $$$$$> cpu time (secs) =   1.7480, vector size =   10
+ $$$$$> cpu time (secs) =   5.1689, vector size =    1

@@ -1,0 +1,124 @@
+# include this file before Make.flags
+# to define variables for peculiar local setups
+
+SYSTEM=$(shell uname)
+
+
+ifeq ($(SYSTEM),Linux)
+# NCCS
+  NODE=$(shell uname -n)
+  ifeq ($(NODE),robin)
+     __X1 = Y
+  else
+    ifdef SuSE
+       NETCDF = -L$(NETCDF_DIR)/lib -lnetcdf
+       ifeq ("${FORTRAN_VARIANT}","Intel")
+          GCC_VERSION=333
+       endif
+    endif
+  endif
+  ifdef PGI_PATH
+# Jaguar
+#    FORTLIBS = -L$(F90HOME)/lib -lpgf90 -lpgf90_rpm1 -lpgf902 -lpgf90rtl -lpgftnrtl -lm -lpgc -lrt
+#    F_MAIN=$(F90HOME)/lib/f90main.o
+# #Franklin
+    FORTLIBS = -L$(PGI)/linux86-64/$(PGI_VERSION)/lib -lpgf90 -lpgf90_rpm1 -lpgf902 -lpgf90rtl -lpgftnrtl -lm -lpgc -lrt
+    F_MAIN = $(PGI)/linux86-64/$(PGI_VERSION)/lib/pgfmain.o
+    CLIBS = -L$(PGI)/linux86-64/$(PGI_VERSION)/lib -lstd -lpgc -lC
+  endif
+
+#
+# for Garching
+#-------------
+#
+#        LIBROOT = /afs/ipp/@sys/
+#        FLIBROOT = $(LIBROOT)/lib/f95f/
+# Roberto's netcdf
+#        NETCDF_DIR = /afs/ipp/u/rbb/usr/local/@sys/
+#  endif
+endif
+
+
+ifeq ($(SYSTEM),IRIX64)
+  LIBROOT = /usr/pppl
+endif
+
+
+ifeq ($(SYSTEM),AIX)
+# for nersc
+ifdef NERSC
+     CC=xlc
+     FLIBROOT = $(NDIXLFROOT)/usr
+#     LAPACK := $(LAPACK) -lessl
+#     BLAS := $(LAPACK)
+     LAPACK := -lessl
+     BLAS := -lessl
+     MDSLIB = -lmds_dummy
+#     NO_EDITLIBS = Y
+#     _64 = Y
+
+else
+# for Garching
+#-------------
+#	FC90 = xlf90 -qsuffix=f=f90
+#        NETCDF_DIR=/afs/ipp/@sys
+	NETCDF_DIR = /afs/ipp-garching.mpg.de/rs_aix42/soft/netcdf
+        LIBROOT = /afs/ipp/@sys
+#        LAPACK = /afs/ipp/rs_aix51/lib/liblapack_RS6K.a
+        LAPACK = -llapack
+        BLAS = -lblas
+	HDF = -lhdf_dummy
+        ELVIS_FLAGS=-D__STDC__ -DLITTLE
+endif
+endif
+
+
+ifeq ($(SYSTEM),SunOS)
+#	MDSPLUS_DIR = /usr/ads/diags/mdsplus
+	MDSPLUS_DIR = /afs/ipp/home/c/cil/mdsplus
+        NETCDF_DIR = /afs/ipp/@sys/soft/netcdf
+        LIBROOT = /usr/gnu
+	CLIBS = -L/usr/gnu/lib -lstdc++ -lgcc_s
+	LDFLAGS = -xlic_lib=sunperf 
+	SUNPERF = Y
+	FORTLIBS = -L/opt/SUNWspro/lib -lfsu -lF77 -lsunmath -lfai -lfai2 \
+		   -lfmaxvai -lfmaxlai -lfminvai -lfminlai -lfsumai -lsunperf
+	XLIBS = -socket -liberty
+ endif
+
+ifeq ($(SYSTEM),HP-UX)
+	LAPACK = -L/d/hp/lib -llapack
+endif
+
+ifndef LIBROOT
+	LIBROOT = /usr/local
+endif
+#if netCDF is not available
+#--------------------------
+ifeq ("$(wildcard $(LIBROOT)/include/netcdf*)","")
+ifeq ("$(wildcard /usr/include/netcdf*)","") 
+ifeq ("$(wildcard $(INCLDIR)/netcdf*)","")
+ifeq ("$(wildcard $(NETCDF_DIR)/include/netcdf*)","")
+	NETCDF = -lcdf_dummy
+endif
+endif
+endif
+endif
+
+# For Wael Elwasif : ornl - gfortran
+#FORTRAN_VARIANT=GCC
+#LIBROOT=/home/elwasif/Projects/SWIM
+#NETCDF_DIR=/home/elwasif/Projects/SWIM
+#PREFIX=/home/elwasif/Projects/SWIM
+#LAPACK= -L/usr/lib64/atlas -llapack -lblas 
+#BLAS := $(LAPACK)
+
+
+#For Bob Harvey : gfortran
+#FORTRAN_VARIANT=GCC
+#NETCDF_DIR =/usr
+#NETCDF = -L/usr/lib64 -lnetcdf -lnetcdff
+#_64=Y
+#FORTLIBS= -L/usr/lib64/gcc/x86_64-suse-linux/4.2.1 -lgfortran
+#
+# make TERMCAP= NO_MDSPLUS=Y

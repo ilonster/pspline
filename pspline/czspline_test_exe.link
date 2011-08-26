@@ -1,0 +1,5 @@
+czspline_test.o
+pspline.a
+ezcdf.a
+portlib.a
+$L_NETCDF

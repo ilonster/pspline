@@ -1,0 +1,198 @@
+++++++++++++++++++
++ EZSPLINE HOWTO +
+++++++++++++++++++
+
+A. Pletzer Mon Apr 24 10:46:54 EDT 2000 (pletzer@pppl.gov)
+D. McCune  Tue Jan 18              2005 (dmccune@pppl.gov -- update)
+D. McCune  Tue Apr 24              2007 (dmccune@pppl.gov -- update)
+
+This guide is intended to help novice users to get quickly acquainted with 
+EZSPLINE.
+
+> What is EZSPLINE?
+
+EZSPLINE is a thin f90 layer on top of D. McCune's PSPLINE routines, a set of 
+Cubic Spline, Hermite, and Piecewise Linear interpolation routines for 1-d,
+2-d and 3-d data.  EZSPLINE has become an integral part of the PSPLINE 
+distribution, which can be downloaded from http://w3.pppl.gov/NTCC. EZSPLINE
+implements almost all of the fortran 77 PSPLINE (F77-PSPLINE) capability.
+
+In April 2007, "hybrid" interpolation methods were added.  This allows 
+objects to be defined which are splined in one dimension, while using
+piecewise linear interpolation or zonal step function interpolation in
+another dimension.
+
+> Is EZSPLINE double or single precision?
+
+EZSPLINE supports both precisions 
+
+integer, parameter  :: ezspline_r8 = selected_real_kind(12,100)
+integer, parameter  :: ezspline_r4 = selected_real_kind(6,37)
+
+> Why using EZSPLINE and not F77-PSPLINE?
+
+The role of EZSPLINE is to provide a compact interface making use of f90 
+features such as dynamical memory allocation and method overloading. The latter
+allows users to invoke a large number of interpolation methods using a unique
+routine name, regardless of whether the data are 1-d, 2-d, 3-d, single or 
+double precision. EZSPLINE supports 3 types of interpolations: on a point, 
+on a cloud of points and on an array of points. 
+
+> How general is EZSPLINE?
+
+Like F77-PSPLINE, EZSPLINE supports cubic spline interpolations with various 
+boundary conditions: not-a-knot, periodic, 1st derivative or second derivative
+imposed. The original grid can be non-uniform (although a regular grid is
+required and a uniform grid improves the performance). Support for Akima 
+interpolation, i.e. Hermite interpolation with numerically determined 
+derivatives at the nodes, is also provided.  Simple piecewise linear/bilinear/
+trilinear interpolation is also available.
+
+Hybrid interpolants can also be defined: Spline along some dimensions;
+piecewise linear or zonal lookup in other dimensions.  At present, however,
+Spline and Akima Hermite interpolation cannot be mixed in a single hybrid
+interpolant.
+
+> How does EZSPLINE work?
+
+EZSPLINE uses derived data (object) types to store the cubic spline 
+coefficients and other useful data. Such packaging reduces the list of 
+arguments in routine calls. Various operations on the objects are invoked 
+through subroutine calls with the first argument referring to the object.
+
+> Are the accesses to data member protected?
+
+No. All members are public. This offers the user the choice to modify the grid
+or other data depending on the specificity of the problem before setting up
+the cubic spline coefficients. 
+
+> How fool proof is EZSPLINE?
+
+EZSPLINE is simple to use but not bullet proof. Because all data members are
+public, it is possible, for instance, to modify array sizes after performing
+the memory allocation and so provoke segmentation faults ;-) 
+
+> How well does EZSPLINE perform?
+
+EZSPLINE adds only a thin layer on top of F77-PSPLINE. Check the NTCC F77-PSPLINE
+help document to get an idea of the F77-PSPLINE performance.
+
+> Does EZSPLINE suffer from the copy pointer-array deficiency known to occur
+with a number of compilers?
+
+Care has been taken to force pointer-arrays to be passed by reference across
+routine calls. 
+
+> Does EZSPLINE have an error handling capability?
+
+It is recommended to follow every EZSPLINE call by 
+
+call EZspline_error(ier)
+
+to check for the returned error status.
+
+> Does EZSPLINE check for nodes outside the domain?
+
+Not by default. Additional routines are provided for that purpose 
+(EZspline_IsInDomain).
+
+> Can an EZSPLINE object be saved and reloaded?
+
+Yes. There are EZspline_save and EZspline_load methods providing a persistence 
+mechanism.
+
+Using standard arguments: EZspline_save saves, and EZspline_load retrieves one
+spline object per NetCDF file.
+
+Using optional argument "spl_name", multiple spline objects, each with its
+own name, can be saved in a single NetCDF file.
+
+EZspline_save has an optional logical argument "fullsave", which, if provided
+and set to .TRUE. causes the spline coefficients to be saved in the file.
+The default is that only the data is saved and the coefficients are re-
+calculated at EZspline_load time.  EZspline_load decides whether or not
+the recalculation is necessary based on the file contents.
+
+With standard arguments:
+
+  call ezspline_save(s1,'foo1.cdf',ier)  ! saves s1 to file "foo1.cdf"
+
+With optional arguments
+
+  call ezspline_save(s1,'foo2.cdf',ier, spl_name='s1', fullsave=.TRUE.)
+  call ezspline_save(s2,'foo2.cdf',ier, spl_name='s2', fullsave=.TRUE.)
+
+Here, both s1 and s2 are saved, with distinguishing names, to a single file.
+Also, it is requested that all the coefficients be saved in the file, for
+both s1 and s2.
+
+> How easy is EZSPLINE to use for 1-d interpolation?
+
+Here is a simple 1-d interpolation. 
+
+use EZspline_obj  ! somewhere at the top
+use EZspline
+...
+type(EZspline1_r8) :: f_spl ! 1-d object/real*8
+integer n1, ier, bcs1(2)
+real*8, dimension(:), ... :: f ! array of dependent variable
+real*8 :: x_int, f_int
+
+bcs1 = (/0, 0/) ! not-a-knot boundary conditions
+call EZspline_init(f_spl, n1, bcs1, ier)
+call EZspline_error(ier)
+
+! f_spl%x1 = (/..../) ! set grid if not (0, 1), resp. (0, 2*pi) when periodic
+
+call EZspline_setup(f_spl, f, ier) ! set up  coefficients
+call EZspline_error(ier)
+
+call EZspline_interp(f_spl, x_int, f_int, ier)
+call EZspline_error(ier)
+
+...
+
+call EZspline_free(f_spl, ier)
+call EZspline_error(ier)
+
+...
+
+> How can I do 3-d interpolation with EZSPLINE?
+
+The following example should make clear that 1-d, 2-d and 3-d interpolation
+only slightly differ:
+
+use EZspline_obj  ! at the top
+use EZspline
+...
+type(EZspline3_r8) :: f_spl ! 3-d object/real*8
+integer n1, n2, n3 ier, bcs1(2), bcs2(2), bcs3(2)
+real*8, dimension(:,:,:), ... :: f ! array of dependent variable
+real*8 :: x_int, y_int, z_int, f_int
+
+bcs1=... ! boundary conditions
+bcs2=... ! boundary conditions
+bcs3=... ! boundary conditions
+
+call EZspline_init(f_spl, n1, n2, n3, bcs1, bcs2, bcs3, ier)
+call EZspline_error(ier)
+
+! f_spl%x1 = (/..../) ! set grid if not (0, 1), resp. (0, 2*pi) when periodic
+! f_spl%x2 = (/..../) ! set grid if not (0, 1), resp. (0, 2*pi) when periodic
+! f_spl%x3 = (/..../) ! set grid if not (0, 1), resp. (0, 2*pi) when periodic
+
+! f_spl%isHermite = 1 ! if Akima Hermite is required
+
+call EZspline_setup(f_spl, f, ier) ! set up  coefficients
+call EZspline_error(ier)
+
+call EZspline_interp(f_spl, x_int, y_int, z_int, f_int, ier)
+call EZspline_error(ier)
+
+...
+
+call EZspline_free(f_spl, ier)
+call EZspline_error(ier)
+
+...
+

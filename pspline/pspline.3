@@ -1,0 +1,38 @@
+.TH pspline 3 "1999-May-24" "ntcc"
+.SH NAME
+PSPLINE \- Spline and Hermite Interpolation
+.SH SYNOPSIS
+f90 ... -L$NTCCHOME/lib -lpspline
+
+.SH DESCRIPTION
+.PP
+A library of Spline and Hermite
+cubic interpolation routines for 1d, 2d, and 3d datasets on
+rectilinear grids.
+
+.SH FILES
+Fortran90 Module for EzSpline
+.sp
+ezspline    (USE ezspline)
+.sp
+when compiling specify location of modules with appropriate compiler option
+.sp
+[ at PPPL  = $NTCCHOME/mod ]
+
+.SH COMPILER OPTIONS
+.sp
+On Sun
+ -fast
+.sp
+On Alpha Linux
+ -assume no2underscores
+.SH "SEE ALSO"
+.LP
+.B http://w3.pppl.gov/NTCC/PSPLINE/pspline.html
+ 
+ or
+.LP
+.B http://w3.pppl.gov/~pshare/help/pspline_hlp.html
+ or
+.LP
+.B http://w3.pppl.gov/~xshare/NTCC/Pspline/EZspline.htm

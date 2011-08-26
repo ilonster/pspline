@@ -1,0 +1,260 @@
+
+ *** 1d spline tests ***
+     f(x)=2+sin(x)
+     x in the interval [0,2pi]
+  
+
+  1d periodic spline setup on  10 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 6.8669E-04
+     max(|diff|/f) =  6.7622E-04
+
+  1d spline w/bdy cond. setup on  10 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 6.7572E-04
+     max(|diff|/f) =  6.6529E-04
+
+  1d compact spline w/bdy cond. setup on  10 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 6.7572E-04
+     max(|diff|/f) =  6.6529E-04
+
+  1d Hermite interpolation setup on  10 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 2.1128E-02
+     max(|diff|/f) =  1.3239E-02
+
+  1d piecewise linear setup on  10 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 5.9397E-02
+     max(|diff|/f) =  5.8588E-02
+  
+
+  1d periodic spline setup on  20 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 3.1882E-05
+     max(|diff|/f) =  3.1778E-05
+
+  1d spline w/bdy cond. setup on  20 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 3.1864E-05
+     max(|diff|/f) =  3.1760E-05
+
+  1d compact spline w/bdy cond. setup on  20 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 3.1864E-05
+     max(|diff|/f) =  3.1760E-05
+
+  1d Hermite interpolation setup on  20 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 2.3029E-03
+     max(|diff|/f) =  1.2742E-03
+
+  1d piecewise linear setup on  20 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.3591E-02
+     max(|diff|/f) =  1.3547E-02
+  
+
+  1d periodic spline setup on  40 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.7631E-06
+     max(|diff|/f) =  1.7615E-06
+
+  1d spline w/bdy cond. setup on  40 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.7631E-06
+     max(|diff|/f) =  1.7615E-06
+
+  1d compact spline w/bdy cond. setup on  40 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.7631E-06
+     max(|diff|/f) =  1.7615E-06
+
+  1d Hermite interpolation setup on  40 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 2.6777E-04
+     max(|diff|/f) =  1.4047E-04
+
+  1d piecewise linear setup on  40 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 3.2387E-03
+     max(|diff|/f) =  3.2359E-03
+  
+
+  1d periodic spline setup on  80 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.0376E-07
+     max(|diff|/f) =  1.0348E-07
+
+  1d spline w/bdy cond. setup on  80 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.0376E-07
+     max(|diff|/f) =  1.0348E-07
+
+  1d compact spline w/bdy cond. setup on  80 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 1.0376E-07
+     max(|diff|/f) =  1.0348E-07
+
+  1d Hermite interpolation setup on  80 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 3.2144E-05
+     max(|diff|/f) =  1.6468E-05
+
+  1d piecewise linear setup on  80 point grid
+   fmin= 1.0000E+00 fmax= 3.0000E+00 max(|diff|)= 7.8722E-04
+     max(|diff|/f) =  7.8702E-04
+
+ *** 2d spline tests ***
+     f(x,theta)=exp(2x-1)*(2+sin(theta))
+     x in [0,1],  theta in [0,2pi]
+
+  
+  hermite setup on  10 x  10 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 5.7383E-02
+     max(|diff|/f) =  1.3579E-02
+   20 x 200 x 200 evaluations, cpu =  3.1000E-01 (s)
+  bpspline setup on  10 x  10 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 1.9366E-03
+     max(|diff|/f) =  7.8282E-04
+   20 x 200 x 200 evaluations, cpu =  2.1000E-01 (s)
+  bpsplinb setup on  10 x  10 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 1.8616E-03
+     max(|diff|/f) =  6.7540E-04
+   20 x 200 x 200 evaluations, cpu =  2.1000E-01 (s)
+  bcspline setup on  10 x  10 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 1.8312E-03
+     max(|diff|/f) =  6.7151E-04
+   20 x 200 x 200 evaluations, cpu =  2.2000E-01 (s)
+  mkbicub setup on  10 x  10 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 1.8312E-03
+     max(|diff|/f) =  6.7151E-04
+   20 x 200 x 200 evaluations, cpu =  3.1000E-01 (s)
+  piecewise linear setup on  10 x  10 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 1.6503E-01
+     max(|diff|/f) =  6.3077E-02
+   20 x 200 x 200 evaluations, cpu =  2.3000E-01 (s)
+  
+  hermite setup on  20 x  20 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 6.2600E-03
+     max(|diff|/f) =  1.3217E-03
+   20 x 200 x 200 evaluations, cpu =  3.1000E-01 (s)
+  bpspline setup on  20 x  20 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 9.4408E-05
+     max(|diff|/f) =  3.6619E-05
+   20 x 200 x 200 evaluations, cpu =  2.1000E-01 (s)
+  bpsplinb setup on  20 x  20 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 8.6614E-05
+     max(|diff|/f) =  3.1744E-05
+   20 x 200 x 200 evaluations, cpu =  2.1000E-01 (s)
+  bcspline setup on  20 x  20 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 8.6564E-05
+     max(|diff|/f) =  3.1725E-05
+   20 x 200 x 200 evaluations, cpu =  2.1000E-01 (s)
+  mkbicub setup on  20 x  20 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 8.6564E-05
+     max(|diff|/f) =  3.1725E-05
+   20 x 200 x 200 evaluations, cpu =  3.1000E-01 (s)
+  piecewise linear setup on  20 x  20 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 3.8911E-02
+     max(|diff|/f) =  1.4825E-02
+   20 x 200 x 200 evaluations, cpu =  2.3000E-01 (s)
+  
+  hermite setup on  40 x  40 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 7.2754E-04
+     max(|diff|/f) =  1.4761E-04
+   20 x 200 x 200 evaluations, cpu =  3.1000E-01 (s)
+  bpspline setup on  40 x  40 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 5.0824E-06
+     max(|diff|/f) =  1.9077E-06
+   20 x 200 x 200 evaluations, cpu =  2.2000E-01 (s)
+  bpsplinb setup on  40 x  40 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 4.5568E-06
+     max(|diff|/f) =  1.6458E-06
+   20 x 200 x 200 evaluations, cpu =  2.2000E-01 (s)
+  bcspline setup on  40 x  40 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 4.5568E-06
+     max(|diff|/f) =  1.6458E-06
+   20 x 200 x 200 evaluations, cpu =  2.1000E-01 (s)
+  mkbicub setup on  40 x  40 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 4.5568E-06
+     max(|diff|/f) =  1.6458E-06
+   20 x 200 x 200 evaluations, cpu =  3.0000E-01 (s)
+  piecewise linear setup on  40 x  40 grid
+   fmin= 3.6789E-01 fmax= 8.1548E+00 max(|diff|)= 9.1776E-03
+     max(|diff|/f) =  3.4464E-03
+   20 x 200 x 200 evaluations, cpu =  2.3000E-01 (s)
+
+ *** 3d spline tests ***
+     f(x,theta,phi)=exp(2x-1)*(2+sin(theta))*(3+sin(phi))
+     x in [0,1],  theta in [0,2pi],  phi in [0,2pi]
+
+
+ %dotest3:  4 x 1000000 evaluations in progress -- be patient.
+
+  hermite setup on  10 x  10 x  10 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.3063E-01
+     max(|diff|/f) =  2.1477E-02
+  100 x 100 x 100 evaluations, cpu =  8.8000E-01 (s)
+  tpspline setup on  10 x  10 x  10 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 1.2836E-02
+     max(|diff|/f) =  1.1091E-03
+  100 x 100 x 100 evaluations, cpu =  6.5000E-01 (s)
+  tpsplinb setup on  10 x  10 x  10 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 1.2836E-02
+     max(|diff|/f) =  1.0017E-03
+  100 x 100 x 100 evaluations, cpu =  6.5000E-01 (s)
+ ==> tcspline setup (nx= 10) cpu time (s): 1.0000E-02 <=================== 
+  tcspline setup on  10 x  10 x  10 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 1.2634E-02
+     max(|diff|/f) =  9.9908E-04
+  100 x 100 x 100 evaluations, cpu =  6.5000E-01 (s)
+ ==> mktricub setup (nx= 10) cpu time (s): 1.0000E-02 <=================== 
+  mktricub setup on  10 x  10 x  10 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 1.2634E-02
+     max(|diff|/f) =  9.9908E-04
+  100 x 100 x 100 evaluations, cpu =  9.0000E-01 (s)
+  piecewise linear setup on  10 x  10 x  10 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 1.1100E+00
+     max(|diff|/f) =  9.1786E-02
+  100 x 100 x 100 evaluations, cpu =  5.8000E-01 (s)
+
+ %dotest3:  4 x 1000000 evaluations in progress -- be patient.
+
+  hermite setup on  20 x  20 x  20 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.4170E-02
+     max(|diff|/f) =  2.1025E-03
+  100 x 100 x 100 evaluations, cpu =  8.7000E-01 (s)
+  tpspline setup on  20 x  20 x  20 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 5.7226E-04
+     max(|diff|/f) =  4.9834E-05
+  100 x 100 x 100 evaluations, cpu =  6.6000E-01 (s)
+  tpsplinb setup on  20 x  20 x  20 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 5.7226E-04
+     max(|diff|/f) =  4.4961E-05
+  100 x 100 x 100 evaluations, cpu =  6.6000E-01 (s)
+ ==> tcspline setup (nx= 20) cpu time (s): 1.0000E-01 <=================== 
+  tcspline setup on  20 x  20 x  20 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 5.7189E-04
+     max(|diff|/f) =  4.4932E-05
+  100 x 100 x 100 evaluations, cpu =  6.6000E-01 (s)
+ ==> mktricub setup (nx= 20) cpu time (s): 4.0000E-02 <=================== 
+  mktricub setup on  20 x  20 x  20 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 5.7189E-04
+     max(|diff|/f) =  4.4932E-05
+  100 x 100 x 100 evaluations, cpu =  9.0000E-01 (s)
+  piecewise linear setup on  20 x  20 x  20 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 2.4988E-01
+     max(|diff|/f) =  2.0947E-02
+  100 x 100 x 100 evaluations, cpu =  5.8000E-01 (s)
+
+ %dotest3:  4 x 1000000 evaluations in progress -- be patient.
+
+  hermite setup on  40 x  40 x  40 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.4715E-03
+     max(|diff|/f) =  2.3914E-04
+  100 x 100 x 100 evaluations, cpu =  8.7000E-01 (s)
+  tpspline setup on  40 x  40 x  40 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.3020E-05
+     max(|diff|/f) =  2.8632E-06
+  100 x 100 x 100 evaluations, cpu =  7.5000E-01 (s)
+  tpsplinb setup on  40 x  40 x  40 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.3020E-05
+     max(|diff|/f) =  2.6014E-06
+  100 x 100 x 100 evaluations, cpu =  7.5000E-01 (s)
+ ==> tcspline setup (nx= 40) cpu time (s): 8.4000E-01 <=================== 
+  tcspline setup on  40 x  40 x  40 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.3020E-05
+     max(|diff|/f) =  2.6014E-06
+  100 x 100 x 100 evaluations, cpu =  7.5000E-01 (s)
+ ==> mktricub setup (nx= 40) cpu time (s): 3.0000E-01 <=================== 
+  mktricub setup on  40 x  40 x  40 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 3.3020E-05
+     max(|diff|/f) =  2.6014E-06
+  100 x 100 x 100 evaluations, cpu =  9.1000E-01 (s)
+  piecewise linear setup on  40 x  40 x  40 grid
+   fmin= 7.3590E-01 fmax= 3.2617E+01 max(|diff|)= 6.1088E-02
+     max(|diff|/f) =  5.1370E-03
+  100 x 100 x 100 evaluations, cpu =  5.8000E-01 (s)

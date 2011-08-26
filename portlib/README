@@ -1,0 +1,252 @@
+PortLib
+=============================================
+
+The module is available through the NTCC Webpage,
+w3.pppl.gov/NTTC  under "Modules Library", as compressed
+tarfile, portlib.tar.gz, and as zip archive, portlib.zip.
+Alternatively it can be obtained from ftp.pppl.gov
+in pub/NTCC/.
+
+For documentation see:
+http://w3.pppl.gov/ntcc/Port
+
+
+o AUTHOR
+  D. McCune dmccune@pppl.gov 
+
+o CONTACT
+  ntcc_webmaster@pppl.gov  
+  D. McCune : dmccune@pppl.gov 
+  C. Ludescher-Furth : cludesche@pppl.gov
+
+****************
+REVISION HISTORY
+****************
+      date         Description
+
+  May 15, 1999  -- Created
+  May 15, 2000  -- Update of README / Makefile
+
+----------------------------------------------------------------
+
+Index:
+   1. CONTENTS
+   2. UNPACKING INSTRUCTIONS
+   3. DESTINATIONS
+   4. BUILDING INSTRUCTIONS
+   5. RUNNING INSTRUCTIONS
+   6. TESTING INSTRUCTIONS
+   7. FINAL INSTALLATION
+   8. ABSTRACT
+
+************
+1. CONTENTS:
+************
+   Makefile:     NOTE, "GNU make" must be used
+                 (usually in /usr/gnu/bin or /usr/local/bin).
+                 Main Makefile to invoke Makefile(s) in subdirectories
+                 (allows for several modules to be built with one step).
+
+-- in subdirectory portlib:
+
+   README:   This file.  Brief descriptions of the other files, and
+             instructions for compiling libportlib.a  and a test. 
+
+   Makefile: Makefile to build library and test. 
+
+   Sources to build libportlib.a:
+             *.F, *.f, *.f9f, *.c, *.h
+
+   Test program:  porttest.F  
+     
+
+-- in subdirectory fpreproc:
+   Python scripts for fortran pre-processing.
+
+-- in subdirectory share:
+   Make.flags:  Include file for Makefile, to setup Flags, etc.
+
+
+**************************
+2. UNPACKING INSTRUCTIONS:
+**************************
+
+for tarfiles:
+  > gunzip portlib.tar.gz
+  > tar xvf portlib.tar
+
+or, for zip archives:
+  > unzip portlib.zip
+
+
+****************
+3. DESTINATIONS:
+****************
+Or where do the files go?
+
+When you extract the tar file you get three sub directories:
+./portlib  --  sources and Makefile
+./share    --  include file Make.flags 
+
+The location of the following subtrees, containing binaries, can be
+controlled via environment variable "OBJ".
+   
+test        : test program
+lib         : the actual library modules
+obj/portlib : temporary for objects
+
+
+By default above directories are created in ./<MACHINE>/, where
+MACHINE is defined in Make.flags.
+e.g.: if you are running Linux, the destination would be ./LINUX/obj, etc.
+
+You can overwrite the destination by defining OBJ, as an environment
+variable (e.g. export OBJ=/dir1/dir2),
+or with make (e.g. "make  OBJ=.").
+If OBJ is defined, the destinations will be
+$OBJ/lib and $OBJ/test.
+If OBJ is defined as "." then, in the example above, the destination
+would be $HOME/foo/lib.
+
+The rational behind <MACHINE> is to facilitate building for various platforms.
+
+Note: If you define OBJ as option to gmake, you have to consistently do so;
+      e.g: gmake clean OBJ=., gmake install OBJ=.
+
+*************************
+4. BUILDING INSTRUCTIONS:
+************************* 
+
+> gmake            -- to build/link library and porttest
+
+> gmake libs       -- to build library only
+> gmake clean      -- to remove all .o files
+> gmake realclean  -- to remove everything but sources.
+
+
+
+Compiling on Linux:
+-------------------
+
+At present, there is no native Linux  fortran 90 compiler. However, many
+vendors offer good quality compilers. The following have been successfully
+used:
+
+-Fujitsu f95
+-PGI pgf77 / pgf90
+
+By default the Makefile will select Fujitsu f95.
+
+To select a different compiler define
+FORTRAN_VARIANT to "Portland"  "NagWare"  "Fujitsu" or "Absoft"
+e.g.:
+setenv FORTRAN_VARIANT Portland (csh)
+FORTRAN_VARIANT=Portland; export  FORTRAN_VARIANT (sh)
+
+Alternatively, FORTRAN_VARIANT can be passed directly to the gmake
+command, as in:
+gmake  FORTRAN_VARIANT=Portland
+
+To use vastf90:
+> gmake all VAST90=y
+
+Caveat: Be careful to use the same compiler for all objects.
+
+
+Compiling on Alpha Linux:
+-------------------------
+The Makefile assumes the Compaq compiler and specifies the 
+ " -assume no2underscores " option.
+
+Therefore the calling user software must also be compiled with this
+option to link.
+
+
+Compiling on SUN:
+-----------------
+The Makefile specifies the " -fast " option which includes -dalign.
+Therefore the calling user software must also be compiled with this
+option to link.
+
+
+***********
+5. TESTING:
+***********
+
+cd <MACHINE>/test  or  cd $OBJ/test
+./porttest
+
+**********************
+7. FINAL INSTALLATION:
+**********************
+
+Choose or create the root directory in which you wish to install the software.
+A common location would be /usr/ntcc, but installation can occur in any
+directory where you have appropriate permissions.
+
+You define your choice of root directory via PREFIX.
+The default for PREFIX is /usr/ntcc.
+
+The assumptions are:
+
+libraries in: $PREFIX/lib        = $LIBDIR       
+man pages in: $PREFIX/man/man3   = $MANDIR/man3
+
+To install the software, return to the top directory (the directory,
+where you downloaded the tar files) and type
+
+> gmake install  
+    to install into /usr/ntcc/...
+
+> gmake install PREFIX=/dir1/dir2/
+    to install into /dir1/dir2/...
+
+If you want things elsewhere, you can overwrite the default with
+> gmake install LIBDIR=/yyy MANDIR=/zzz
+
+NOTE:
+-----
+The library is installed as libportlib.a
+Users should link with
+
+-L<PREFIX>/lib -lportlib
+
+Make sure users know what <PREFIX> is.
+
+After you have installed the software, you can delete the entire tree
+with
+> cd ..
+> rm -r foo
+   assuming the previous example.
+
+
+
+************
+8. ABSTRACT
+************
+
+There are a number of "operating systems support" functions that are frequently
+needed in programs, for which no standard interface is available. Examples of 
+such functions are: access to the shell, access to command line arguments, 
+access to environment variables or VMS logical names, elapsed cpu time, and so
+on. In UNIX terminology these are the fortran "3f" routines: system, getarg, 
+getenv, etc. Accessing these routines requires slightly different code, 
+depending on vendor or operating system.
+    The portlib library provides a standardized portable interface to these 
+routines, encapsulating the system to system variability, making it easier for 
+the applications developer to achieve portability without the need to resort to
+such techniques as conditional compilation via cpp directives. 
+
+-------------------------------------------------------------------------------
+
+IF YOU HAVE ANY PROBLEMS, PLEASE CONTACT EITHER:
+
+
+        Doug McCune, Princeton University
+                dmccune@pppl.gov
+        or
+
+        Christiane Ludescher-Furth, Princeton University
+                cludescher@pppl.gov
+        or      
+                ntcc_webmaster@pppl.gov

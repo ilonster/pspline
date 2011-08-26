@@ -1,0 +1,561 @@
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+EZspline: an f90 interface to the PSPLINE routines supporting 
+real*4 (r4) and real*8 (r8) precisions
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+A Pletzer Mon Apr 24 09:53:34 EDT 2000 (pletzer@pppl.gov)
+D McCune  Tue Jan 18              2005 (dmccune@pppl.gov)
+D McCune                          2006 (dmccune@pppl.gov)
+D McCune  Tue Apr 24              2007 (dmccune@pppl.gov)
+
+  -----------------------
+  2007 update -- EZspline supports "hybrid" interpolation, using methods
+  newly added to the pspline base library.
+
+  2d and 3d objects can now be designated for different methods of
+  interpolation along each grid dimension.
+
+  Use the new methods {EZhybrid_init} to initialize r4 or r8 2d or 3d 
+  hybrid interpolation objects.  This method accepts an integer array
+  argument "hspline" which has 2 elements or 3 elements for 2d or 3d
+  objects respectively.  The interpretation is:
+
+    hspline(j) = -1 => zonal step function along dimension "j"
+                       (in this case the size of the data along this
+                       dimension is ONE LESS than the corresponding
+                       grid; the grid gives the step function zone
+                       boundaries.
+    hspline(j) =  0 => piecewise linear along dimension "j"
+    hspline(j) =  1 => Akima Hermite C1 segmented cubic along dimension "j".
+    hspline(j) =  2 => C2 cubic Spline along dimension "j".
+
+  Restriction: at present, Akima Hermite and Spline interpolation cannot
+  be mixed in a single hybrid object.  I.e. if hspline(j)=2 then hspline(k)=1
+  must not occur for k.ne.j.
+
+  Boundary conditions can be specified for the end points of the dimensions
+  having cubic interpolation.  The treatment is the same as for "pure"
+  Hermite or Spline objects.  However, boundary condition array sizes are
+  reduced by one along any zonal step function dimension (matching the
+  treatment of the interpolation data itself).
+
+  -----------------------
+  2006 update -- EZspline_save supports two optional arguments:
+
+        character*(*) :: spl_name  ! name of spline being saved.
+                                   ! alphanumeric, no imbedded blanks
+	logical :: fullsave        ! TRUE to save the spline coefficients
+
+  If spl_name is used, it allows multiple spline objects to be saved in
+  a single file; the spl_name value must be given again when the file is
+  read using EZspline_load. If the spl_name argument is omitted, the file
+  contains but one spline object, as before.
+
+  If fullsave=.TRUE. is set, the spline and all its coefficients are saved.
+  If fullsave is omitted or .FALSE., only the data values are saved and the
+  coefficients are recalculated at EZspline_load time.
+
+  EZspline_load now supports the spl_name optional argument, to specify
+  which spline object to read from a file containing multiple named spline
+  objects.  There is no fullsave argument; EZspline_load figures out the
+  right thing to do based on file contents.
+
+  -----------------------
+  2005 update -- EZspline supports piecewise linear interpolation
+  (linear, bilinear, trilinear for 1d 2d and 3d data respectively).
+  Use EZlinear_Init instead of EZSpline_Init to set up a spline
+  object for piecewise linear instead of spline or Hermite 
+  interpolation.  Piecewise linear interpolation needs no boundary
+  conditions; therefore, EZlinear_Init calls need no boundary
+  condition type specification arguments.
+
+  -----------------------
+
+1) AIM
+
+Provide an easy to use and flexible f90 interface to Doug McCune's 
+PSPLINE routines. The main features of EZspline are:
+
+* provide a single interface to 1-d, 2-d or 3-d spline interpolation.
+
+* allow for a variety of boundary conditions (periodic, not-a-knot, 
+1st derivative or 2nd derivative imposed).
+
+* support both compact cubic splines and Akima Hermites.
+(In 2005, support for simple piecewise linear interpolation was added
+to EZspline).
+
+(In 2007, support for hybrid objects-- Spline along some dimensions, 
+piecewise linear and/or zonal step function along others-- was added
+to EZspline).
+
+* offers intuitive method for evaluating derivatives up to and including 
+2nd order (up to 1st order for Akima Hermite and Piecewise Linear).
+
+* use dynamic memory allocation.
+
+* implement error handling through a dedicated routine (EZspline_error).
+
+* use reasonable default parameters (uniform grid [0, 1] or [0, 2 pi] in the 
+case of periodic boundary conditions).
+
+* interpolation objects can be dumped to or loaded from a netCDF file.
+
+
+2) EZspline(n)_r(m) DATA TYPE
+
+Spline and Hermite coefficients are encapsulated into derived types bearing
+the name EZspline(n)_r(m) where "n" denotes the dimensionality or rank, 1, 2 
+or 3 and "m" the precision, either 4 or 8. The "r8" and "r4" precision are 
+defined as
+
+integer, parameter  :: ezspline_r8 = selected_real_kind(12,100)
+integer, parameter  :: ezspline_r4 = selected_real_kind(6,37)
+
+in ezspline_mod.f90.
+
+The various interpolation methods are universally supported across 
+types (1-d, 2-d or 3-d) and precisions through the use of interfaces.
+
+The EZspline(n)_r(m) types are accessed by importing the module 
+
+  use EZspline_obj
+
+a statement that should be added somewhere at the top of the routine/program 
+(before any locally defined variables and before any IMPLICIT statement). A
+2-D/real*8 interpolation object, for instance, is declared as
+
+type(EZspline2_r8) :: spl
+
+Members of the 'spl'object are accessed through the % operator. Typical 
+members are
+
+spl%isHermite Set this to 1 if interpolation is Akima (spline is default)
+
+spl%x1 Grid in the 1st variable
+spl%x2 Grid in the 2nd variable
+spl%n1 Grid size in the 1st variable
+...
+spl%bcval1min Boundary condition value on the left for the 1st variable
+spl%bcval1max Boundary condition value on the right for the 1st variable
+spl%bcval2min Boundary condition value on the left for the 2nd variable
+...
+
+Some members such as x1, x2, x3..., bcval1min, bcval1max, bcval2min...
+can be explicitely set by the user. Others, such as n1, n2... and the boundary
+value type ibctype1, ibctype2... should only be set through a call to the 
+constructor (EZspline_init).
+
+
+3) EZspline's REFLECTIVE METHODS
+
+EZspline methods defined in the EZspline module. To access the the methods the following
+modules must be imported
+
+   use EZspline_obj
+   use EZspline
+
+somewhere at the top of the caller routine (before any local declaration and any
+IMPLICIT statement).
+
+The interpolation (spline or Akima) object is declared as follows:
+
+type(EZspline3_r8) :: spline_o ! 3-d cubic spline/real*8 object
+
+(somewhere at the top but below any USE and IMPLICIT declarations).
+
+
+All reflective methods are subroutines which take an interpolation object 
+as 1st argument and return an error flag as last argument (0 is OK). It is 
+strongly advised to to check the value of the returned flag (ier) after each 
+method is invoked and map its value to an error message by calling 
+EZspline_error(ier).
+
+   call EZspline_xxxx(spline_o, ...., ier) ! generic EZspline method call
+   call EZspline_error(ier)
+
+At the very least, the use of an EZspline interpolation involves the 
+following steps:
+
+* initialization (EZspline_init or EZlinear_init or EZhybrid_init)
+
+* coefficient set-up (EZspline_setup)
+
+* interpolation proper (eg EZspline_interp)
+
+* freeing the memory (EZspline_free)
+
+We now go through every method in details
+
+3.a) Initialization, memory allocation and boundary condition set-up
+
+subroutine EZspline_init(spline_o, n1, n2, n3, BCS1, BCS2, BCS3, ier)
+     type(EZspline3_r8) spline_o
+     integer, intent(in) :: n1, n2, n3
+     integer, intent(in) :: BCS1(2), BCS2(2), BCS3(2)
+     integer, intent(out) :: ier 
+
+Here BCS1, BCS2 and BCS3 are 2-element arrays describing the boundary conditions. 
+Each element can be either:
+
+* -1 for periodic boundary condition
+
+*  0 for not a knot boundary condition
+
+*  1 if the 1st derivative is imposed
+
+*  2 if the 2nd derivative is imposed
+
+on grid n=1, 2 or 3 with the 1st and 2nd elements denoting the boundary 
+conditions on the left and right respectively.
+
+Note-- Uniform grids [0,1] are assumed for x1, x2, x3  by default ([0, 2 pi]
+in the case of periodic boundary conditions). It is the responsibility of 
+the user to explicitly set x1, x2 and x3 otherwise! The x1, x2 and x3 members
+should be set before EZspline_setup is called.
+
+To initialize an 3d object for piecewise linear interpolation, use instead:
+
+subroutine EZlinear_init(spline_o, n1, n2, n3, ier)
+     type(EZspline3_r8) spline_o
+     integer, intent(in) :: n1, n2, n3
+     integer, intent(out) :: ier 
+
+In this case the default uniform grids always cover [0,1].
+
+To initialize a 3d hybrid object, use instead:
+
+subroutine EZhybrid_init3_r8(spline_o, n1, n2, n3, hspline, ier, &
+                             BCS1, BCS2, BCS3)
+
+     type(EZspline3_r8) spline_o
+     integer, intent(in) :: n1, n2, n3
+     integer, intent(in) :: hspline(3)
+     integer, intent(out) :: ier
+     integer, intent(in), OPTIONAL :: BCS1(2), BCS2(2), BCS3(2)
+
+The integer array hspline(1:3) controls the interpolation to be used along
+each dimension, according to the code:
+
+    hspline(j) = -1 => zonal step function along dimension "j"
+                       (in this case the size of the data along this
+                       dimension is ONE LESS than the corresponding
+                       grid; the grid gives the step function zone
+                       boundaries.
+    hspline(j) =  0 => piecewise linear along dimension "j"
+    hspline(j) =  1 => Akima Hermite C1 segmented cubic along dimension "j".
+    hspline(j) =  2 => C2 cubic Spline along dimension "j".
+
+The boundary condition specifications BCS* are optional; if present they
+are interpreted as in EZspline_init.  Boundary condition controls which 
+prescribe a derivative value only have effect for the end points of 
+dimensions along which cubic (Hermite or Spline) interpolation is applied.
+A positive boundary condition control for a dimension with piecewise linear 
+or zonal step function interpolation will be reported as an error.  For
+piewise linear or zonal dimensions, a periodic boundary condition can be
+specified, but, it only affects the default grid provided for that dimension.
+
+As with EZspline, default grids are provided that span [0:1], or [0:2pi]
+for dimensions with periodic boundary conditions specified.
+
+NOTE: at present, Spline and Hermite interpolation cannot be mixed, for
+technical reasons.  An error will be reported if one of the hspline(1:3)
+elements is 1, and another is 2.
+
+3.b) Spline/Akima Hermite/Hybrid object coefficients set-up
+
+Given the array f this routine computes all the necessary cubic coefficients
+for subsequent interpolation.
+
+subroutine EZspline_setup(spline_o, f, ier, exact_dim)
+     type(EZspline3_r8) spline_o
+     real(r8), dimension(:,:,:), intent(in) :: f
+     integer, intent(out) :: ier
+     logical, intent(in), OPTIONAL :: exact_dim
+
+Even for piecewise linear interpolation, this routine must be called-- this
+copies the data being interpolated into the object, and, calculates information
+needed to speed zone lookup during future interpolation calls.
+
+The optional argument controls array dimension size checking.  Note that the
+expected size is the grid size (the n1, n2, or n3 arguments given in 
+EZspline_init), or one less than the grid size in the case of dimensions of
+hybrid objects along which zonal step function interpolation is used.
+
+If exact_dim=.TRUE. is specified, all the dimensions of f(:,:,:) must match
+the corresponding non-coefficient dimensions of spline_o%fspl EXACTLY.  If 
+it is omitted or set .FALSE., the dimensions of f(:,:,:) can match or exceed
+the corresponding dimensions of spline_o%fspl; only the first (n1,n2,n3, or
+n1-1,n2-1,n3-1 as the case may be) points of f are copied into spline_o%fspl.
+
+3.c) Interpolation methods
+
+The interpolation methods come in 3 flavors: point interpolation, cloud
+interpolation and array interpolation. The point interpolation operates on a 
+single point (p1, p2, p3). The cloud interpolation operates on a list
+of unordered points, and is particularly useful for mapping a structured 
+mesh onto an unstructured grid. The array interpolation operates on a 
+structured grid. All interpolation routines share the same name but accept 
+3 types of arguments through the use of an interface:
+
+! point interpolation: p1, p2, p3 and f are scalars
+call EZspline_interp(spline_o, p1, p2, p3, f, ier)
+!
+! cloud interpolation: p1, p2, p3 and f are rank-1 arrays of length n	
+call EZspline_interp(spline_o, n, p1, p2, p3, f, ier)
+!
+! array interpolation: p1, p2, p3 are rank-1 arrays of 
+! length n1, n2 and n3 respectively. Here f has size (n1, n2, n3).
+call EZspline_interp(spline_o, n1, n2, n3, p1, p2, p3, f, ier)
+
+3.d) Higher order derivatives
+
+These are achieved using EZspline_derivative with the first 3
+integers denoting the derivative order. As above, the EZspline_derivative
+routines come in 3 flavors: point, cloud and array interpolation.
+
+!
+! evaluate the spline derivative 
+! d^{i1} d^{i2} d^{i3} f / d x1^{i1} d x2^{i2} d x2^{i3} 
+!
+subroutine EZspline_derivative(spline_o, i1, i2, i3, p1, p2, p3, f, ier)
+
+In some situations all derivatives may be required and it is then more
+efficient to call 
+!
+! Return the gradient at point p1, p2, p3 in df(3)=(/fx, fy, fz/).
+!
+subroutine EZspline_gradient(spline_o, p1, p2, p3, df, ier)
+
+3.e) Control/diagnostics
+
+Because checking whether arguments are inside a given domain can be 
+detrimental to efficiency, the responsibility to check this is 
+left to the user. A return value of ier > 0 indicates failure of
+the test.
+!
+! control/diagnostics
+!
+subroutine EZspline_isInDomain(spline_o, p1, p2, p3, ier)
+subroutine EZspline_isGridRegular(spline_o, ier)
+
+3.f) persistence
+
+Persistence is the action of saving intermediate results for debugging
+and/or postprocessing purposes. Here, EZcdf_save saves all the data necessary to
+rebuild the cubic spline object, and EZcdf_load reads these data and recompute 
+the cubic spline coefficients.
+!
+! save in or load from netCDF file -- 
+!   note new arguments "spl_name" and "fullsave" which are OPTIONAL:
+!   see "2006 update" comments, above.
+!
+subroutine EZspline_save(spline_o, filname, ier, &
+                         spl_name, fullsave)            ! optional
+subroutine EZspline_load(spline_o, filname, ier, &
+                         spl_name)                      ! optional
+!
+
+3.g) modulo
+
+! Map argument to (x1,2,3min, x1,2,3max) interval. This is useful to avoid 
+! an out-of-grid error when periodic boundary conditions are applied. This
+! method has no effect when the boundary conditions are not periodic.
+!
+subroutine EZspline_modulo3(spline_o, p1, p2, p3, ier)
+
+
+3.g) free
+
+Every call to EZcdf_init should be followed by a call to EZspline_free to
+prevent memory leak.
+
+! deallocate, reset etc
+!
+call EZspline_free(spline_o, ier)
+
+Note that an error will be reported if an attempt is made to initialize an 
+already-initialized spline object (which would be a sign of a memory leak).
+
+
+4) EZspline's NON-REFLECTIVE METHODS
+
+A small number of methods do not take the interpolation object as first argument.
+Hence, these methods can be called even after the object has been freed. 
+
+
+4.a) Error handling
+
+The meaning a an error code is printed using EZspline_error. This routine 
+is a look up table printing error/warning messages. 
+!
+! error handle routine
+!
+call EZspline_error(ier)
+
+4.b) Save data in netCDF file format
+
+Save data in netCDF file 'filename'. To save an EZspline1,2,3 object use
+EZspline_save method. 
+
+subroutine EZspline_2NetCDF_array3(n1, n2, n3, x1, x2, x3, f, filename, ier)
+
+
+
+5) EXAMPLE
+
+
+Here is a full 3-d spline interpolation example taking periodic boundary 
+conditions on the first two variables, and not a knot boundary condition
+on the last variable. Accordingly, the bcval1,2,3min/bcval1,2,3max values 
+need not be set.
+
+program spline_test
+
+  ! example of ezspline calls
+  ! -------------------------
+  ! On PPPL cluster machine use the following command ot compile:
+  ! On Alpha-Linux:
+  ! f90 -assume no2underscores -I/usr/ntcc/mod -o spline_test spline_test.f90 -L/usr/ntcc/lib -lpspline -lezcdf -L/usr/local/lib -lnetcdf
+  ! On Alpha-OSF1:
+  ! f90 -I/usr/ntcc/mod -o spline_test spline_test.f90 -L/usr/ntcc/lib -lpspline -lezcdf -L/usr/local/lib -lnetcdf
+  ! On Solaris:
+  ! f90 -M/usr/ntcc/mod -dalign -o spline_test spline_test.f90 -L/usr/ntcc/lib -lpspline -lezcdf -L/usr/local/lib -lnetcdf
+  ! On Linux (Lahey-Fujitsu):
+  ! lf95 -I /usr/ntcc/lff95/mod -o spline_test spline_test.f90 -L/usr/ntcc/lff95/lib -lpspline -lezcdf -L/usr/local/lib -lnetcdf
+
+
+  use EZspline_obj ! import the modules
+  use EZspline	
+
+  implicit none
+  integer, parameter :: r8 = selected_real_kind(12,100) ! real*8 kind
+  real(r8), parameter :: twopi = 6.2831853071795862320_r8
+
+  real(r8), dimension(:), allocatable :: x1, x2, x3 ! independent
+  ! variables
+  real(r8), dimension(:,:,:), allocatable :: f ! function values
+  integer n1, n2, n3, ier, BCS1(2), BCS2(2), BCS3(2)
+  type(EZspline3_r8) :: spline_o ! 3-d EZspline object
+
+  real(r8) p1, p2, p3, fp
+
+  integer m, i1, i2, i3, i
+  real(r8), dimension(:), allocatable :: y1, y2, y3, fy
+
+  integer k1, k2, k3
+  real(r8), dimension(:), allocatable :: z1, z2, z3
+  real(r8), dimension(:,:,:), allocatable :: fz
+
+  n1 = 11
+  n2 = 6
+  n3 = 21
+
+  allocate(x1(n1), x2(n2), x3(n3), f(n1,n2,n3))
+
+  BCS1 = (/ -1, -1 /) ! periodic
+  BCS2 = (/ -1, -1 /) ! periodic
+  BCS3 = (/  0,  0 /) ! not a knot
+
+  ! initialize/allocate memory
+  print *,'initializing...'
+
+  call EZspline_init(spline_o, n1, n2, n3, BCS1, BCS2, BCS3, ier)
+  call EZspline_error(ier)
+
+  !spline_o%x1 = ... ! necessary if spline_o%x1 not in [0, 2 pi]
+  !spline_o%x2 = ... ! necessary if spline_o%x2 not in [0, 2 pi]
+  ! set explicitely spline_o%x3
+  spline_o%x3 = -1._r8 + 2._r8*(/ ( (real(i-1,r8)/real(n3-1,r8))**2,  i=1, n3 ) /)
+
+  ! need to set explicitly the following if boundary conditions 
+  ! are anything but not-a-knot or periodic, i.e. BCS(n) has
+  ! element /= -1, 0.
+  ! spline_o%bcval1min = ... ; spline_o%bcval1max = ...
+  ! spline_o%bcval2min = ... ; spline_o%bcval2max = ...
+  ! spline_o%bcval3min = ... ; spline_o%bcval3max = ...
+
+
+  ! compute cubic spline coefficients
+
+  do i3=1, n3
+     do i2 = 1, n2
+        do i1 = 1, n1
+           f(i1,i2,i3) = (cos(twopi*i1/(n1-1))* &
+                & sin(twopi*i2/(n2-1))**2)*exp(spline_o%x3(i3))
+        enddo
+     enddo
+  enddo
+
+  print *,'setting up...'
+
+  call EZspline_setup(spline_o, f, ier)
+  call EZspline_error(ier)
+
+  ! save object
+
+  call EZspline_save(spline_o, "spline.nc", ier)
+  call EZspline_error(ier)
+
+
+  ! point interpolation
+
+  p1 = twopi/2._r8
+  p2 = 0._r8
+  p3 = -0.5_r8
+  print *,'point interpolation...'
+
+  call EZspline_interp(spline_o, p1, p2, p3, fp, ier)
+  call EZspline_error(ier)
+
+  ! cloud interpolation
+
+  m  = 21
+  allocate(y1(m), y2(m), y3(m), fy(m))
+
+  y1 = spline_o%x1min + (spline_o%x1max-spline_o%x1min)* &
+       & (/ ( real(i-1,r8)/real(m-1,r8),  i=1, m ) /)
+  y2 = spline_o%x2min + (spline_o%x2max-spline_o%x2min)* &
+       & (/ ( real(i-1,r8)/real(m-1,r8),  i=1, m ) /)
+  y3 = spline_o%x3min + (spline_o%x3max-spline_o%x3min)* &
+       & (/ ( real(i-1,r8)/real(m-1,r8),  i=1, m ) /)
+
+
+  print *,'cloud interpolation...'
+
+  call EZspline_interp(spline_o, m, y1, y2, y3, fy, ier)
+  call EZspline_error(ier)
+
+  ! array interpolation
+
+  k1 = 5
+  k2 = 4
+  k3 = 3
+  allocate(z1(k1), z2(k2), z3(k3), fz(k1,k2,k3))
+
+  z1 = spline_o%x1min + (spline_o%x1max-spline_o%x1min)* &
+       & (/ ( real(i-1,r8)/real(k1-1,r8),  i=1, k1 ) /)
+  z2 = spline_o%x2min + (spline_o%x2max-spline_o%x2min)* &
+       & (/ ( real(i-1,r8)/real(k2-1,r8),  i=1, k2 ) /)
+  z3 = spline_o%x3min + (spline_o%x3max-spline_o%x3min)* &
+       & (/ ( real(i-1,r8)/real(k3-1,r8),  i=1, k3 ) /)
+  
+
+  print *,'array interpolation...'
+
+  call EZspline_interp(spline_o, k1, k2, k3, z1, z2, z3, fz, ier)
+  call EZspline_error(ier)
+
+  ! clean up and free up memory
+
+  print *,'cleaning up'
+
+  call Ezspline_free(spline_o, ier)
+  call EZspline_error(ier)
+
+  deallocate(x1, x2, x3, f)
+  deallocate(y1, y2, y3, fy)
+  deallocate(z1, z2, z3, fz)
+
+end program spline_test

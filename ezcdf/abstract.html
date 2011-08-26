@@ -1,0 +1,31 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+</head>
+<body>
+<p>
+EZcdf is a high-level,  easy-to-use interface to the NetCDF library
+(http://www.unidata.ucar.edu/packages/netcdf), a file format which
+allows one to write/read binary files across architectures without
+regard to the underlying native byte ordering. NetCDF is language
+independent; files can be written in a programming language (e.g.
+Fortran, C, Java, Python, IDL) and read in another. Data can be accessed
+randomly so that the content of a NetCDF file can evolve without
+compromising backwards compatibility.
+</p>
+<p>
+Unfortunetely, the complexity of NetCDF has deterred many users in the
+past. While  EZcdf does not support the full capability of NetCDF, it is
+almost as simple to write a NetCDF file with EZcdf as  using unformatted
+read/write instructions. At present, EZcdf only supports finite sized
+arrays of rank <= 3. On the other hand, EZcdf accepts complex and
+logical data types, which are mapped to real, respectively integer,
+arrays while providing a name mangling mechanism to overcome the lack of
+support for complex and integer types in NetCDF.
+<br>
+
+EZcdf's first application was to replace BZIO calls in many PPPL codes
+such as JSOLVER, DMAP, PEST and others.
+</p>
+</body>
+</html>

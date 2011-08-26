@@ -1,0 +1,7 @@
+# make ezspline_obj and ezspline globally accessible
+
+ezspline_mod.f90
+
+# make pspline (f77 style) calls interface module globally accessible
+
+pspline_calls.for
